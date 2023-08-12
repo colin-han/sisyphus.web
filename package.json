@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anatoliygatt/use-prefers-color-scheme": "^1.0.10",
     "@ant-design/cssinjs": "^1.12.0",
     "@ant-design/icons": "^5.1.4",
     "@ant-design/static-style-extract": "^1.0.1",

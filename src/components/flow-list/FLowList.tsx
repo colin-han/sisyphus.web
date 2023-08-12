@@ -1,13 +1,17 @@
 import * as flowApis from '@/apis/flow';
-import { Collapse, Table } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Collapse, Table } from 'antd';
 import Link from 'next/link';
+import { useToggle } from 'usehooks-ts';
+import FlowCreationDialog from './FlowCreationDialog';
 
 export default function FlowList() {
     const { data: res, isLoading, error } = flowApis.useFlowList();
+    const [flowCreationDialogShown, toggleFlowCreationDialogShown] = useToggle(false)
 
     if (error) return "Fetch error: " + error.message;
 
-    return (
+    return (<>
         <Collapse activeKey={['my-flows']} items={[
             {
                 key: 'my-flows',
@@ -44,8 +48,15 @@ export default function FlowList() {
                             }
                         ]}
                     />
+                ),
+                extra: (
+                    <Button type="primary" icon={<PlusCircleOutlined />} onClick={toggleFlowCreationDialogShown}>新建工作流</Button>
                 )
             }
         ]} />
-    )
+        <FlowCreationDialog 
+            open={flowCreationDialogShown} 
+            onClose={toggleFlowCreationDialogShown}
+        />
+    </>)
 }

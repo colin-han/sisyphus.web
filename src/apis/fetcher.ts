@@ -1,7 +1,8 @@
 import { Response  } from '@/types/http';
 
-export default async function fetcher<T>(key: string): Promise<T> {
-    const response = await fetch(process.env.BACKEND + key, {
+export default async function fetcher<T>(url: string, init?: RequestInit): Promise<T> {
+    const response = await fetch(process.env.BACKEND + url, {
+        ...(init || {}),
         credentials: 'include'
     });
     if (response.ok) {

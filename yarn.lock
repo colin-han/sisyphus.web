@@ -12,6 +12,11 @@
   resolved "https://registry.npmmirror.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
+"@anatoliygatt/use-prefers-color-scheme@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmmirror.com/@anatoliygatt/use-prefers-color-scheme/-/use-prefers-color-scheme-1.0.10.tgz#3b1899add92e0b0b3960bd960ef58bf115cae611"
+  integrity sha512-J0KU47IpMhwbWOlfQmanILijZvQyRZKeNOHpSiQ38vDd7FH+nTvWAo5ltC8Rk5cq4ClmEF7Mm1YOTdn5+7TZ7w==
+
 "@ant-design/colors@^7.0.0":
   version "7.0.0"
   resolved "https://registry.npmmirror.com/@ant-design/colors/-/colors-7.0.0.tgz#eb7eecead124c3533aea05d61254f0a17f2b61b3"

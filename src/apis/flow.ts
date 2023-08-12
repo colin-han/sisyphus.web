@@ -6,3 +6,7 @@ import fetcher from './fetcher';
 export function useFlowList(): SWRResponse<{flows: FlowInfo[]}, Error> {
     return useSWR<{ flows: FlowInfo[] }>('/flows/', fetcher, { refreshInterval: 10 });
 }
+
+export async function createFlow(name: string, description: string) {
+    return fetcher('/flows/', { method: 'post', body: JSON.stringify({name, description})});
+}
