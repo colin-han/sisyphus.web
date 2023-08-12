@@ -1,10 +1,15 @@
 import { Response  } from '@/types/http';
+import _ from 'lodash';
 
 export default async function fetcher<T>(url: string, init?: RequestInit): Promise<T> {
-    const response = await fetch(process.env.BACKEND + url, {
-        ...(init || {}),
-        credentials: 'include'
-    });
+    const response = await fetch(process.env.BACKEND + url, 
+        _.assign({
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: 'include'
+        }, init),
+    );
     if (response.ok) {
         const res = await response.json() as Response<T>;
         if (res.success) {

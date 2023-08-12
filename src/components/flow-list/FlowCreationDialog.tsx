@@ -19,15 +19,18 @@ export default function FlowCreationDialog(props: FlowCreationDialogProps) {
             title="Create Flow"
             open={props.open}
             onOk={handleFlowCreation}
+            onCancel={props.onClose}
         >
             <Form
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 20 }}
                 form={form}
                 name="flow-creation"
                 onFinish={handleFlowCreation}
             >
-                <Form.Item 
-                    name="name" 
-                    label="名称" 
+                <Form.Item
+                    name="name"
+                    label="名称"
                     rules={[
                         { required: true, message: '请输入工作流名称' },
                         { pattern: /^\w[\w0-9\-_.]*$/, message: "请输入字母、数字、连字符 ('-'、'_')。" }

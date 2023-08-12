@@ -4,7 +4,7 @@ import useSWR, { SWRResponse } from 'swr';
 import fetcher from './fetcher';
 
 export function useFlowList(): SWRResponse<{flows: FlowInfo[]}, Error> {
-    return useSWR<{ flows: FlowInfo[] }>('/flows/', fetcher, { refreshInterval: 10 });
+    return useSWR<{ flows: FlowInfo[] }>('/flows/', fetcher, { refreshInterval: 20 });
 }
 
 export async function createFlow(name: string, description: string) {
