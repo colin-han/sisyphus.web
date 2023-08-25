@@ -1,0 +1,39 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    border: 1px solid #424242;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    overflow: hidden;
+
+    flex: 0 0 auto;
+
+    background-color: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5714285714285714;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid #424242;
+    padding: 16px;
+}
+
+.title {
+    flex: 1 1 auto;
+}
+
+.actions {
+    flex: 0 0 auto;
+}
+
+.content {
+    flex: 1 1 auto;
+    background-color: #141414;
+    border-radius: 0 0 8px 8px;
+    padding: 16px;
+}

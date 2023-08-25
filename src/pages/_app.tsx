@@ -3,14 +3,16 @@ import Navigator from '@/components/nav/Navigator';
 import { ConfigProvider, Layout, theme } from 'antd';
 import { usePrefersColorScheme } from '@anatoliygatt/use-prefers-color-scheme';
 import './globals.css';
+import { useTernaryDarkMode } from 'usehooks-ts';
 
 export default function RootApp({ Component, pageProps }: AppProps) {
-  const isDarkTheme = usePrefersColorScheme() == 'dark';
+  // const { isDarkMode } = useTernaryDarkMode();
+  const isDarkMode = usePrefersColorScheme() == 'dark';
 
   return (
     <ConfigProvider
       theme={{
-        algorithm: isDarkTheme ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
     >
       <Layout style={{height: '100%'}}>

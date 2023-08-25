@@ -6,7 +6,7 @@ import { useToggle } from 'usehooks-ts';
 import FlowCreationDialog from './FlowCreationDialog';
 
 export default function FlowList() {
-    const { data: res, isLoading, error } = flowApis.useFlowList();
+    const { data, isLoading, error } = flowApis.useFlowList();
     const [flowCreationDialogShown, toggleFlowCreationDialogShown] = useToggle(false)
 
     if (error) return "Fetch error: " + error.message;
@@ -19,7 +19,8 @@ export default function FlowList() {
                 children: (
                     <Table
                         loading={isLoading}
-                        dataSource={res?.flows || []}
+                        dataSource={data ?? []}
+                        rowKey="id"
                         columns={[
                             {
                                 title: '名称',
@@ -27,7 +28,7 @@ export default function FlowList() {
                                 key: 'name',
                                 render(name, flow) {
                                     return (
-                                        <Link href={`/flow-designer/${flow.id}`}>${name}</Link>
+                                        <Link href={`/flow/design/${flow.id}`}>{name}</Link>
                                     )
                                 }
                             },
