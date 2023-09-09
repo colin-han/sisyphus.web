@@ -38,6 +38,7 @@ export default function FlowPreview({ id, code }: FlowPreviewProps) {
     }
 
     function Viewer({ zoomToElement }: ReactZoomPanPinchHandlers) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(() => zoomToElement('flow-viewer'), [zoomToElement, svg]);
 
         return (<>

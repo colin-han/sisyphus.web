@@ -2,16 +2,11 @@
 
 import React from 'react';
 
-import {
-    Button,
-    Space,
-    Divider,
-    Tabs,
-} from 'antd';
+import ProgramList from '@/components/program-list/ProgramList';
 
 const Home = function Home() {
     return (
-        "Hi!"
+        <ProgramList />
     );
 }
 
