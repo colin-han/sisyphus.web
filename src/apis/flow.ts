@@ -21,13 +21,27 @@ export function useFlow(id: number) {
     return useSWR<FlowInfo>(id ? `/flows/${id}` : undefined, fetcher, disableAutoRefresh)
 }
 
+export interface ParseError {
+    line: number;
+    column: number;
+    length: number;
+    message: string;
+}
+
+export interface UpdateFlowResponse {
+    success: boolean;
+    flow?: FlowInfo;
+    errors?: ParseError[];
+}
+
 export function updateFlow(id: number, flow: FlowInfo) {
-    return fetcher<void>(`/flows/${id}`, { method: 'put', body: JSON.stringify(flow)});
+    return fetcher<UpdateFlowResponse>(`/flows/${id}`, { method: 'put', body: JSON.stringify(flow)});
 }
 
 export interface SvgInfo {
-    svg: string;
-    error: string;
+    success: boolean;
+    svg?: string;
+    errors?: ParseError[];
 }
 
 export function flowToSvg(id: number, code: string) {
