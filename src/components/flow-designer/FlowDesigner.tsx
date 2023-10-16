@@ -43,7 +43,7 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
 
     return (
         <div className={s.root}>
-            <Panel className={s.designer} header="流程图编辑">
+            <Panel className={s.designerPanel} header="流程图编辑">
                 <Input.TextArea
                     className={s.code}
                     value={flow?.code ?? ''}
@@ -51,13 +51,17 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
                 />
             </Panel>
             <Panel
-                className={s.preview}
+                className={s.previewPanel}
                 header="预览"
                 actions={<div><Button size="small" style={{margin: -1}} onClick={handleSaveFlow}>保存</Button></div>}
             >
-                <div className={s.previewPanel}>
-                    <FlowPreview loading={loading} svg={svg}/>
-                    {errors && <ErrorView errors={errors}/>}
+                <div className={s.previewContainer}>
+                    <div className={s.preview}>
+                        <FlowPreview loading={loading} svg={svg}/>
+                    </div>
+                    <div className={s.error}>
+                        {errors && <ErrorView errors={errors}/>}
+                    </div>
                 </div>
             </Panel>
         </div>

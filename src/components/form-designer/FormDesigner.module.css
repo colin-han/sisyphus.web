@@ -7,8 +7,8 @@
     align-items: stretch;
 }
 
-.preview,
-.designer {
+.previewPanel,
+.designerPanel {
     margin: 8px;
     width: 50%;
     flex: 1 1 auto;

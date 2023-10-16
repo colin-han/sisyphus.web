@@ -5,6 +5,7 @@
     border: 1px solid #424242;
     border-radius: 8px;
     overflow: hidden;
+    height: 100%;
 }
 
 .header {
@@ -36,4 +37,5 @@
     background-color: #141414;
     border-radius: 0 0 8px 8px;
     padding: 16px;
+    height: 10%;
 }

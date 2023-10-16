@@ -19,7 +19,7 @@ export default function FlowPreview({ loading, svg }: FlowPreviewProps) {
         useEffect(() => zoomToElement('flow-viewer'), [zoomToElement, svg]);
 
         return (<>
-            <TransformComponent wrapperStyle={{flex: '1 1 100%', width: '100%'}}>
+            <TransformComponent wrapperStyle={{height: '100%', width: '100%'}}>
                 <div id='flow-viewer' dangerouslySetInnerHTML={{ __html: svg! }} />
             </TransformComponent>
         </>);
