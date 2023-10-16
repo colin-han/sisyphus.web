@@ -8,6 +8,7 @@ import {FlowInfo} from "@/types/flow";
 import FlowPreview from './FlowPreview';
 import Panel from '../panel/Panel';
 import useFlowPreview from "@/components/flow-designer/useFlowPreview";
+import FlowEditor from "@/components/flow-designer/FlowEditor";
 
 interface FlowDesignerProps {
     flowId: number;
@@ -22,8 +23,7 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
         if (res) setFlow(res);
     }, [res])
 
-    function handleUpdateCode(e: ChangeEvent<HTMLTextAreaElement>) {
-        const code: string = e.target.value || '';
+    function handleUpdateCode(code?: string) {
         setFlow((f?: FlowInfo) => ({...f!, code: code ?? ''}));
     }
 
@@ -44,11 +44,12 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
     return (
         <div className={s.root}>
             <Panel className={s.designerPanel} header="流程图编辑">
-                <Input.TextArea
-                    className={s.code}
-                    value={flow?.code ?? ''}
-                    onChange={handleUpdateCode}
-                />
+                {/*<Input.TextArea*/}
+                {/*    className={s.code}*/}
+                {/*    value={flow?.code ?? ''}*/}
+                {/*    onChange={handleUpdateCode}*/}
+                {/*/>*/}
+                <FlowEditor onChange={handleUpdateCode} code={flow?.code ?? ''} />
             </Panel>
             <Panel
                 className={s.previewPanel}
