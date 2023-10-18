@@ -1,6 +1,6 @@
 import * as flowApis from "@/apis/flow";
 import {useEffect, useState } from "react";
-import {ParseError, SvgInfo} from "@/apis/flow";
+import {SvgInfo} from "@/apis/flow";
 
 export default function useFlowPreview(id: number, code?: string) {
     const [loading, setLoading] = useState(true);

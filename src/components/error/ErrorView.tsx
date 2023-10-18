@@ -1,5 +1,6 @@
 import {Alert, Typography } from "antd";
-import {ParseError} from "@/apis/flow";
+
+import {ParseError} from "@/types/ParseError";
 
 export interface ErrorProps {
     errors: ParseError[];

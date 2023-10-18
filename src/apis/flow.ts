@@ -1,7 +1,8 @@
-import type { FlowInfo } from '../types/flow';
-import useSWR, { SWRResponse } from 'swr';
+import type {FlowInfo} from '../types/flow';
+import useSWR, {SWRResponse} from 'swr';
 import fetcher from './fetcher';
-import { PublicConfiguration } from 'swr/_internal';
+import {PublicConfiguration} from 'swr/_internal';
+import {ParseError} from "@/types/ParseError";
 
 const disableAutoRefresh: Partial<PublicConfiguration<any, any, any>> = {
     revalidateIfStale: false,
@@ -19,13 +20,6 @@ export async function createFlow(name: string, description: string) {
 
 export function useFlow(id: number) {
     return useSWR<FlowInfo>(id ? `/flows/${id}` : undefined, fetcher, disableAutoRefresh)
-}
-
-export interface ParseError {
-    line: number;
-    column: number;
-    length: number;
-    message: string;
 }
 
 export interface UpdateFlowResponse {

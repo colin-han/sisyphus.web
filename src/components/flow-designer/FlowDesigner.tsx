@@ -3,7 +3,7 @@ import * as flowApis from '@/apis/flow';
 import ErrorView from "../error/ErrorView";
 import {Skeleton, Input, Button, message} from "antd";
 import s from './FlowDesigner.module.css';
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {FlowInfo} from "@/types/flow";
 import FlowPreview from './FlowPreview';
 import Panel from '../panel/Panel';
@@ -44,12 +44,7 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
     return (
         <div className={s.root}>
             <Panel className={s.designerPanel} header="流程图编辑">
-                {/*<Input.TextArea*/}
-                {/*    className={s.code}*/}
-                {/*    value={flow?.code ?? ''}*/}
-                {/*    onChange={handleUpdateCode}*/}
-                {/*/>*/}
-                <FlowEditor onChange={handleUpdateCode} code={flow?.code ?? ''} />
+                <FlowEditor onChange={handleUpdateCode} code={flow?.code ?? ''} errors={errors} />
             </Panel>
             <Panel
                 className={s.previewPanel}
