@@ -1,6 +1,6 @@
 'use client';
 import * as formApis from '@/apis/form';
-import ErrorView from "../error/ErrorView";
+import ParseErrorView from "../error/ParseErrorView";
 import {Skeleton, Input, Button, message} from "antd";
 import s from './FormDesigner.module.css';
 import {ChangeEvent, useEffect, useState} from "react";
@@ -32,7 +32,7 @@ export default function FormDesigner({formId}: FormDesignerProps) {
     }
 
     if (error) {
-        return <ErrorView error={error}/>
+        return <ParseErrorView error={error}/>
     }
 
     if (isLoading) {

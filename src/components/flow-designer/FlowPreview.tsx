@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as flowApis from '@/apis/flow';
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchHandlers } from "react-zoom-pan-pinch";
 import { Spin } from "antd";
-import ErrorView from "../error/ErrorView";
+import ParseErrorView from "../error/ParseErrorView";
 
 export interface FlowPreviewProps {
     loading: boolean;

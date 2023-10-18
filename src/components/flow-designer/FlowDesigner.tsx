@@ -1,7 +1,7 @@
 'use client';
 import * as flowApis from '@/apis/flow';
-import ErrorView from "../error/ErrorView";
-import {Skeleton, Input, Button, message} from "antd";
+import ParseErrorView from "../error/ParseErrorView";
+import {Skeleton, Button, message} from "antd";
 import s from './FlowDesigner.module.css';
 import {useEffect, useState} from "react";
 import {FlowInfo} from "@/types/flow";
@@ -9,6 +9,7 @@ import FlowPreview from './FlowPreview';
 import Panel from '../panel/Panel';
 import useFlowPreview from "@/components/flow-designer/useFlowPreview";
 import FlowEditor from "@/components/flow-designer/FlowEditor";
+import ErrorView from "@/components/error/ErrorView";
 
 interface FlowDesignerProps {
     flowId: number;
@@ -56,7 +57,7 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
                         <FlowPreview loading={loading} svg={svg}/>
                     </div>
                     <div className={s.error}>
-                        {errors && <ErrorView errors={errors}/>}
+                        {errors && <ParseErrorView errors={errors}/>}
                     </div>
                 </div>
             </Panel>

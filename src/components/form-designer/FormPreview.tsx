@@ -1,5 +1,5 @@
 import * as formApis from "@/apis/form";
-import ErrorView from "@/components/error/ErrorView";
+import ParseErrorView from "@/components/error/ParseErrorView";
 import { Spin } from "antd";
 import {useEffect, useState } from "react";
 import JacalFormViewer from "@/components/jacal/JacalFormViewer";
@@ -35,7 +35,7 @@ export default function FormPreview({formId, code}: FormPreviewProps) {
     }
 
     if (error) {
-        return <ErrorView error={error} />;
+        return <ParseErrorView error={error} />;
     }
 
     return <JacalFormViewer formId={formId}
