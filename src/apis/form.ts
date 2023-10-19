@@ -3,6 +3,7 @@ import fetcher from './fetcher';
 import { PublicConfiguration } from 'swr/_internal';
 import {FormInfo} from "@/types/form";
 import {JacalForm} from "@/components/jacal/jacal-model";
+import {ParseError} from "@/types/ParseError";
 
 const disableAutoRefresh: Partial<PublicConfiguration<any, any, any>> = {
     revalidateIfStale: false,
@@ -27,8 +28,9 @@ export function updateForm(id: number, flow: FormInfo) {
 }
 
 export interface JacalModelParseResponse {
-    model: JacalForm;
-    error?: string;
+    success: boolean;
+    model?: JacalForm;
+    errors?: ParseError[];
 }
 export function parseModel(id: number, code: string) {
     return fetcher<JacalModelParseResponse>(`/forms/${id}/model`, { method: 'post', body: JSON.stringify({code})});

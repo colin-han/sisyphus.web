@@ -7,35 +7,15 @@ import {JacalForm} from "@/components/jacal/jacal-model";
 
 interface FormPreviewProps {
     formId: number;
-    code: string;
+    loading: boolean;
+    model: JacalForm;
 }
 
-export default function FormPreview({formId, code}: FormPreviewProps) {
-    const [loading, setLoading] = useState(true);
-    const [model, setModel] = useState<JacalForm>();
-    const [error, setError] = useState<Error | null>(null);
+export default function FormPreview({formId, loading, model}: FormPreviewProps) {
 
-    useEffect(() => {
-        setLoading(true);
-        formApis.parseModel(formId, code ?? '')
-            .then(info => {
-                if (info.error) {
-                    setError(new Error(info.error));
-                } else {
-                    setModel(info.model);
-                    setError(null);
-                }
-            })
-            .catch(setError)
-            .finally(() => setLoading(false));
-    }, [formId, code]);
 
     if (loading) {
         return <Spin />
-    }
-
-    if (error) {
-        return <ParseErrorView error={error} />;
     }
 
     return <JacalFormViewer formId={formId}

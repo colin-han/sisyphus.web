@@ -1,12 +1,16 @@
 'use client';
 import * as formApis from '@/apis/form';
-import ParseErrorView from "../error/ParseErrorView";
-import {Skeleton, Input, Button, message} from "antd";
+import {Skeleton, Button, message} from "antd";
 import s from './FormDesigner.module.css';
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {FormInfo} from "@/types/form";
 import Panel from '../panel/Panel';
 import FormPreview from "@/components/form-designer/FormPreview";
+import ErrorView from "@/components/error/ErrorView";
+import useFormPreview from "@/components/form-designer/useFormPreview";
+import FormEditor from './FormEditor';
+import FlowPreview from "@/components/flow-designer/FlowPreview";
+import ParseErrorView from "@/components/error/ParseErrorView";
 
 interface FormDesignerProps {
     formId: number;
@@ -15,13 +19,13 @@ interface FormDesignerProps {
 export default function FormDesigner({formId}: FormDesignerProps) {
     const {data: res, isLoading, error} = formApis.useForm(formId);
     const [form, setForm] = useState<FormInfo>();
+    const {loading, model, errors} = useFormPreview(formId, form?.code ?? '');
 
     useEffect(() => {
         if (res) setForm(res);
     }, [res])
 
-    function handleUpdateCode(e: ChangeEvent<HTMLTextAreaElement>) {
-        const code: string = e.target.value || '';
+    function handleUpdateCode(code?: string) {
         setForm((f?: FormInfo) => ({...f!, code: code ?? ''}));
     }
 
@@ -32,7 +36,7 @@ export default function FormDesigner({formId}: FormDesignerProps) {
     }
 
     if (error) {
-        return <ParseErrorView error={error}/>
+        return <ErrorView error={error}/>
     }
 
     if (isLoading) {
@@ -41,19 +45,22 @@ export default function FormDesigner({formId}: FormDesignerProps) {
 
     return (
         <div className={s.root}>
-            <Panel className={s.designer} header="表单编辑">
-                <Input.TextArea
-                    className={s.code}
-                    value={form?.code ?? ''}
-                    onChange={handleUpdateCode}
-                />
+            <Panel className={s.designerPanel} header="表单编辑">
+                <FormEditor onChange={handleUpdateCode} code={form?.code ?? ''} errors={errors} />
             </Panel>
             <Panel
-                className={s.preview}
+                className={s.previewPanel}
                 header="预览"
                 actions={<div><Button size="small" style={{margin: -1}} onClick={handleSaveForm}>保存</Button></div>}
             >
-                <FormPreview formId={formId} code={form?.code ?? ''}/>
+                <div className={s.previewContainer}>
+                    <div className={s.preview}>
+                        <FormPreview formId={formId} model={model!} loading={loading}/>
+                    </div>
+                    <div className={s.error}>
+                        {errors && <ParseErrorView errors={errors}/>}
+                    </div>
+                </div>
             </Panel>
         </div>
     )
