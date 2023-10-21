@@ -6,12 +6,12 @@ export interface ErrorProps {
     errors: ParseError[];
 }
 
-function getMessage(e: ParseError) {
-    return `[${e.line}, ${e.column}]: ${e.message}`;
+function getMessage(e: ParseError, index: number) {
+    return <li key={index}>[{e.line}, {e.column}]: {e.message}</li>;
 }
 
 export default function ParseErrorView(props: ErrorProps) {
     return (<Alert message="错误"
-                   description={props.errors.map(e => getMessage(e)).join('\n')}
+                   description={<ul>{props.errors.map(getMessage)}</ul>}
                    type="error"/>);
 }

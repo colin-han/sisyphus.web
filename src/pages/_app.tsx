@@ -1,4 +1,4 @@
-import type { AppProps } from 'next/app';// import './globals.css'
+import type { AppProps } from 'next/app';
 import Navigator from '@/components/nav/Navigator';
 import { ConfigProvider, Layout, theme } from 'antd';
 import { usePrefersColorScheme } from '@anatoliygatt/use-prefers-color-scheme';
