@@ -1,7 +1,8 @@
 import { Typography } from "antd";
+import NetworkError from "@/types/NetworkError";
 
 export interface ErrorProps {
-    error: Error;
+    error: Error | NetworkError;
 }
 
 export default function ErrorView(props: ErrorProps) {

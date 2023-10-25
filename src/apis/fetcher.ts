@@ -1,8 +1,8 @@
-import { Response  } from '@/types/http';
 import _ from 'lodash';
+import ResultOrErrors from "@/types/ResultOrErrors";
 
-export default async function fetcher<T>(url: string, init?: RequestInit): Promise<T> {
-    const response = await fetch(process.env.BACKEND + url, 
+export default async function fetcher<TResult, TError = string>(url: string, init?: RequestInit): Promise<ResultOrErrors<TResult, TError>> {
+    const response = await fetch(process.env.BACKEND + url,
         _.assign({
             headers: {
                 "Content-Type": "application/json"
@@ -11,13 +11,16 @@ export default async function fetcher<T>(url: string, init?: RequestInit): Promi
         }, init),
     );
     if (response.ok) {
-        const res = await response.json() as Response<T>;
-        if (res.success) {
-            return res.data;
-        } else {
-            throw new Error(res.error);
-        }
+        return await response.json() as Promise<ResultOrErrors<TResult, TError>>;
     } else {
-        throw new Error(`Error to fetch data, Response status: ${response.status} (${response.statusText})`);
+        return {
+            success: false,
+            errors: [],
+            networkError: {
+                type: 'network',
+                message: `Error to fetch data, Response status: ${response.status} (${response.statusText})`,
+                status: response.status
+            }
+        };
     }
 }

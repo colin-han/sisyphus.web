@@ -1,9 +1,9 @@
-import useSWR, { SWRResponse } from 'swr';
+import useSWR from './useSWR';
 import fetcher from './fetcher';
 import { PublicConfiguration } from 'swr/_internal';
 import {FormInfo} from "@/types/form";
 import {JacalForm} from "@/components/jacal/jacal-model";
-import {ParseError} from "@/types/ParseError";
+import useCompileResource from "@/apis/useCompileResource";
 
 const disableAutoRefresh: Partial<PublicConfiguration<any, any, any>> = {
     revalidateIfStale: false,
@@ -11,8 +11,8 @@ const disableAutoRefresh: Partial<PublicConfiguration<any, any, any>> = {
     revalidateOnReconnect: false
 }
 
-export function useFormList(): SWRResponse<FormInfo[], Error> {
-    return useSWR<FormInfo[]>('/forms/', fetcher, { refreshInterval: 10000 });
+export function useFormList() {
+    return useSWR<FormInfo[]>('/forms/', { refreshInterval: 10000 });
 }
 
 export async function createForm(name: string, description: string) {
@@ -20,18 +20,13 @@ export async function createForm(name: string, description: string) {
 }
 
 export function useForm(id: number) {
-    return useSWR<FormInfo>(id ? `/forms/${id}` : undefined, fetcher, disableAutoRefresh)
+    return useSWR<FormInfo>(id ? `/forms/${id}` : undefined, disableAutoRefresh)
 }
 
 export function updateForm(id: number, flow: FormInfo) {
     return fetcher<void>(`/forms/${id}`, { method: 'put', body: JSON.stringify(flow)});
 }
 
-export interface JacalModelParseResponse {
-    success: boolean;
-    model?: JacalForm;
-    errors?: ParseError[];
-}
-export function parseModel(id: number, code: string) {
-    return fetcher<JacalModelParseResponse>(`/forms/${id}/model`, { method: 'post', body: JSON.stringify({code})});
+export function useJacalModel(id: number, code?: string) {
+    return useCompileResource<JacalForm>(`/forms/${id}/model`, code);
 }

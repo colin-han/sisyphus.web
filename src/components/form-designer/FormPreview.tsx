@@ -1,7 +1,4 @@
-import * as formApis from "@/apis/form";
-import ParseErrorView from "@/components/error/ParseErrorView";
 import { Spin } from "antd";
-import {useEffect, useState } from "react";
 import JacalFormViewer from "@/components/jacal/JacalFormViewer";
 import {JacalForm} from "@/components/jacal/jacal-model";
 
@@ -12,8 +9,6 @@ interface FormPreviewProps {
 }
 
 export default function FormPreview({formId, loading, model}: FormPreviewProps) {
-
-
     if (loading) {
         return <Spin />
     }

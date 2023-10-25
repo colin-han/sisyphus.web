@@ -7,9 +7,7 @@ import {FormInfo} from "@/types/form";
 import Panel from '../panel/Panel';
 import FormPreview from "@/components/form-designer/FormPreview";
 import ErrorView from "@/components/error/ErrorView";
-import useFormPreview from "@/components/form-designer/useFormPreview";
 import FormEditor from './FormEditor';
-import FlowPreview from "@/components/flow-designer/FlowPreview";
 import ParseErrorView from "@/components/error/ParseErrorView";
 
 interface FormDesignerProps {
@@ -19,7 +17,12 @@ interface FormDesignerProps {
 export default function FormDesigner({formId}: FormDesignerProps) {
     const {data: res, isLoading, error} = formApis.useForm(formId);
     const [form, setForm] = useState<FormInfo>();
-    const {loading, model, errors} = useFormPreview(formId, form?.code ?? '');
+    const {
+        loading,
+        result,
+        compileErrors,
+        networkError
+    } = formApis.useJacalModel(formId, form?.code);
 
     useEffect(() => {
         if (res) setForm(res);
@@ -46,7 +49,7 @@ export default function FormDesigner({formId}: FormDesignerProps) {
     return (
         <div className={s.root}>
             <Panel className={s.designerPanel} header="表单编辑">
-                <FormEditor onChange={handleUpdateCode} code={form?.code ?? ''} errors={errors} />
+                <FormEditor onChange={handleUpdateCode} code={form?.code ?? ''} errors={compileErrors}/>
             </Panel>
             <Panel
                 className={s.previewPanel}
@@ -55,10 +58,10 @@ export default function FormDesigner({formId}: FormDesignerProps) {
             >
                 <div className={s.previewContainer}>
                     <div className={s.preview}>
-                        <FormPreview formId={formId} model={model!} loading={loading}/>
+                        <FormPreview formId={formId} model={result!} loading={loading}/>
                     </div>
                     <div className={s.error}>
-                        {errors && <ParseErrorView errors={errors}/>}
+                        <ParseErrorView compileErrors={compileErrors} networkError={networkError}/>
                     </div>
                 </div>
             </Panel>

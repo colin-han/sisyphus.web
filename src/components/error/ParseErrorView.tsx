@@ -1,17 +1,24 @@
-import {Alert, Typography } from "antd";
-
-import {ParseError} from "@/types/ParseError";
+import {Alert} from "antd";
+import ParseError from "@/types/ParseError";
+import ParseErrorLine from "@/components/error/ParseErrorLine";
+import NetworkError from "@/types/NetworkError";
 
 export interface ErrorProps {
-    errors: ParseError[];
+    compileErrors?: ParseError[];
+    networkError?: NetworkError;
 }
 
 function getMessage(e: ParseError, index: number) {
-    return <li key={index}>[{e.line}, {e.column}]: {e.message}</li>;
+    return <li key={index}><ParseErrorLine error={e}/></li>;
 }
 
 export default function ParseErrorView(props: ErrorProps) {
+    if (!props.networkError && !props.compileErrors?.length) return null;
+
     return (<Alert message="错误"
-                   description={<ul>{props.errors.map(getMessage)}</ul>}
+                   description={<ul>
+                       {props.networkError && <li>{props.networkError.message}</li>}
+                       {props.compileErrors?.map(getMessage)}
+                   </ul>}
                    type="error"/>);
 }

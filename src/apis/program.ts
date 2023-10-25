@@ -1,5 +1,4 @@
-import useSWR from "swr";
-
+import useSWR from "./useSWR";
 
 export interface FlowWithProgram {
     id: number;

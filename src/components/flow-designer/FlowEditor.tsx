@@ -1,7 +1,7 @@
 import {Editor, useMonaco} from "@monaco-editor/react";
 import {editor} from "monaco-editor";
 import {useEffect, useRef} from "react";
-import {ParseError} from "@/types/ParseError";
+import ParseError from "@/types/ParseError";
 
 export interface FlowEditorProps {
     onChange: (code?: string) => void;

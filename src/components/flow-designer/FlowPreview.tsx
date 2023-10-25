@@ -1,26 +1,24 @@
-import { useEffect, useState } from "react";
-import * as flowApis from '@/apis/flow';
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchHandlers } from "react-zoom-pan-pinch";
-import { Spin } from "antd";
-import ParseErrorView from "../error/ParseErrorView";
+import {useEffect} from "react";
+import {TransformWrapper, TransformComponent, ReactZoomPanPinchHandlers} from "react-zoom-pan-pinch";
+import {Spin} from "antd";
 
 export interface FlowPreviewProps {
     loading: boolean;
     svg: string;
 }
 
-export default function FlowPreview({ loading, svg }: FlowPreviewProps) {
+export default function FlowPreview({loading, svg}: FlowPreviewProps) {
     if (loading) {
-        return <Spin />
+        return <Spin/>
     }
 
-    function Viewer({ zoomToElement }: ReactZoomPanPinchHandlers) {
+    function Viewer({zoomToElement}: ReactZoomPanPinchHandlers) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(() => zoomToElement('flow-viewer'), [zoomToElement, svg]);
 
         return (<>
             <TransformComponent wrapperStyle={{height: '100%', width: '100%'}}>
-                <div id='flow-viewer' dangerouslySetInnerHTML={{ __html: svg! }} />
+                <div id='flow-viewer' dangerouslySetInnerHTML={{__html: svg!}}/>
             </TransformComponent>
         </>);
     }

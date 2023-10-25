@@ -7,7 +7,6 @@ import {useEffect, useState} from "react";
 import {FlowInfo} from "@/types/flow";
 import FlowPreview from './FlowPreview';
 import Panel from '../panel/Panel';
-import useFlowPreview from "@/components/flow-designer/useFlowPreview";
 import FlowEditor from "@/components/flow-designer/FlowEditor";
 import ErrorView from "@/components/error/ErrorView";
 
@@ -18,7 +17,12 @@ interface FlowDesignerProps {
 export default function FlowDesigner({flowId}: FlowDesignerProps) {
     const {data: res, isLoading, error} = flowApis.useFlow(flowId);
     const [flow, setFlow] = useState<FlowInfo>();
-    const {svg, loading, errors} = useFlowPreview(flowId, flow?.code);
+    const {
+        result,
+        loading,
+        compileErrors,
+        networkError
+    } = flowApis.useFlowSvg(flowId, flow?.code);
 
     useEffect(() => {
         if (res) setFlow(res);
@@ -34,8 +38,8 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
             .catch(() => message.error("保存失败！"));
     }
 
-    if (error) {
-        return <ErrorView error={error}/>
+    if (error || networkError) {
+        return <ErrorView error={error || networkError!}/>
     }
 
     if (isLoading) {
@@ -45,7 +49,7 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
     return (
         <div className={s.root}>
             <Panel className={s.designerPanel} header="流程图编辑">
-                <FlowEditor onChange={handleUpdateCode} code={flow?.code ?? ''} errors={errors} />
+                <FlowEditor onChange={handleUpdateCode} code={flow?.code ?? ''} errors={compileErrors} />
             </Panel>
             <Panel
                 className={s.previewPanel}
@@ -54,10 +58,10 @@ export default function FlowDesigner({flowId}: FlowDesignerProps) {
             >
                 <div className={s.previewContainer}>
                     <div className={s.preview}>
-                        <FlowPreview loading={loading} svg={svg}/>
+                        <FlowPreview loading={loading} svg={result!}/>
                     </div>
                     <div className={s.error}>
-                        {errors && <ParseErrorView errors={errors}/>}
+                        <ParseErrorView compileErrors={compileErrors} networkError={networkError}/>
                     </div>
                 </div>
             </Panel>

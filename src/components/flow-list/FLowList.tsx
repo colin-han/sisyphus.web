@@ -4,12 +4,13 @@ import { Button, Collapse, Table } from 'antd';
 import Link from 'next/link';
 import { useToggle } from 'usehooks-ts';
 import FlowCreationDialog from './FlowCreationDialog';
+import FetchErrorView from "@/components/error/FetchErrorView";
 
 export default function FlowList() {
     const { data, isLoading, error } = flowApis.useFlowList();
     const [flowCreationDialogShown, toggleFlowCreationDialogShown] = useToggle(false)
 
-    if (error) return "Fetch error: " + error.message;
+    if (error) return <FetchErrorView.String error={error} />;
 
     return (<>
         <Collapse activeKey={['my-flows']} items={[
